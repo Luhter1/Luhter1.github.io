@@ -2,6 +2,8 @@ import actor.*;
 import en.LandType;
 import Interface.*;
 import action.*;
+import except.*;
+import java.util.Scanner;
 
 public class main{
 	
@@ -32,10 +34,25 @@ public class main{
         people.run("эллюминаторы");
 
         Plane plane = new Plane("plane", 0);
-        plane.setSpeed(500);
+        Scanner in = new Scanner(System.in);
+        System.out.print("Set speed: ");
+        int speed = in.nextInt();
+
+        for(int i=0; i<2; i++){
+            try{
+                plane.setSpeed(speed);
+                break;
+            }catch(PlaneMaxSpeedException e){
+                System.out.println(e.toString());
+                System.out.println("Изменяем скорость самолета до скорости истребителя");
+                speed = 8100;
+            }
+        }
 
         Mountain mountain = new Mountain("mountain", LandType.UP, 1000);
         plane.getSpeed();
+
+        try{
         plane.approach(mountain);
         people.seePart(V, plane, mountain);
         Time.wait(plane, 1);
@@ -88,6 +105,21 @@ public class main{
                     return "DeathWorld.мир_смерти";
                 }
         };
+        
+        MountainCube M_C = new MountainCube("cubes", LandType.UP);
+        Danfort D = new Danfort("Danfort");
+        D.makeSee(people, M_C);
+
+        Rerich R = new Rerich("rerich");
+        Land P_T = R.paint("Asia");
+        System.out.println(P_T.equals(M_C));
+    
+        Area A = new Area("Континент", LandType.DOWN);
+        A.hasPartOfArt(R);
+        
+        }catch(ZeroSpeedException e){
+            System.out.println(e.toString());        
+        }
         
     }
 }

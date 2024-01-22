@@ -15,7 +15,9 @@ public class Person implements Imaginationable{
     }
   
     public Image see(Land a){
-        // внутренний класс Image передаем на return и вызываем метод
+        // инвертируем зависимость между person and land
+        // person не зависит от конкретной реализации Land, а зависит от абстракции Land
+        // не передаем конкретные классы, а используем абстракции
         class ImageR extends Image{
             
             ImageR(String L, LandType T){super(L, T);}

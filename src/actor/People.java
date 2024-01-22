@@ -17,7 +17,7 @@ public class People extends Person implements Feelable{
     }
 
     public boolean isConsider(Plane P, Land L){
-        //если видно, реализуем see
+       
         if(P.getDistanceTo(L) == "большая"){
             System.out.println(name + " is not Consider " + L.toString() + " from " + P.toString());
         }else{

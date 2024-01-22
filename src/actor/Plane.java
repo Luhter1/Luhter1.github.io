@@ -2,6 +2,7 @@ package actor;
 
 import Interface.Land;
 import java.util.Objects;
+import except.*;
 
 public class Plane{
     private int speed=0; 
@@ -9,18 +10,19 @@ public class Plane{
     private String name;
     private String dis;
 
-    public class Approach{
-        int start;        
+    private class Approach{
+        int Abs;        
         public Approach(Mountain o){
-            this.start = o.getCoordinate();
+            this.Abs = Math.abs(distance-o.getCoordinate());
         }
         
-        public int Ex(){ ///////////////////Ошибка если скорость == 0
-            return Math.abs(distance-start)/speed;
+        public int Ex(){
+            if(speed==0) throw new ZeroSpeedException();
+            return Abs/speed;
         }
         
         public String dis(){
-            return Math.abs(distance-start)>=1000 ? "большая" : Math.abs(distance-start)>=1 ? "маленькая" : "на месте";
+            return Abs>=1000 ? "большая" : Abs>=1 ? "маленькая" : "на месте";
         }
     }
 
@@ -30,16 +32,20 @@ public class Plane{
         System.out.println("\nInitialized: " + this.toString() + "\n");       
     }
 
-    public void setSpeed(int speed){
+    public void setSpeed(int speed) throws PlaneMaxSpeedException{
+        if(speed<8200){
         this.speed = speed;
-        System.out.println(name + ":speed " + speed); 
+        System.out.println(name + ":speed " + speed);}
+        else{
+            throw new PlaneMaxSpeedException(speed);
+        } 
     }
 
     public int getSpeed(){  
         if(speed > 500){System.out.println(name+":speed огромная");}
         else if(speed >= 300){System.out.println(name+":speed большая");}
-        else if(speed>0){System.out.println(name+":speed маленькая");}
-        else System.out.println(name+":speed не двигается");
+        else if(speed >0){System.out.println(name+":speed маленькая");}
+        else{System.out.println(name+":speed не двигается");}
         return speed;
     }
 
